@@ -53,5 +53,5 @@ function init () {
                 connection.end();
         }
 
-    }
+    })
 }
