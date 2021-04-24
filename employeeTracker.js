@@ -6,15 +6,6 @@ const logo = require("asciiart-logo");
 const consTable = require("console.table");
 const { exit } = require("process");
 
-// establishing a sql connection
-const connection = mysql.createConnection({
-    host: 'localhost',
-    port: process.env.PORT || 3306,
-    user: 'root',
-    password: 'root',
-    database: 'employees_db',
-});
-
 // function to display "employee tracker logo"
 function logo(){
     // setting the text to display
