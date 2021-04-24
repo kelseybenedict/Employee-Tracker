@@ -12,6 +12,14 @@ class DB {
     addRole(role) {
         return this.connection.query("INSERT INTO roles SET ?", role);
     };
+    
+    // find all departments
+    findAllDepartments(){
+        return this.connection.query("SELECT department.id, department.name FROM department LEFT JOIN roles ON roles.department_id = department_id LEFT JOIN employee ON employee.role_id = role_id GROUP BY department.id, department.name")
+    }
+    addDepartment(department){
+        return this.connection.query("INSERT INTO department SET ?", department);
+    }
 };
 
 module.exports = new DB(connection);

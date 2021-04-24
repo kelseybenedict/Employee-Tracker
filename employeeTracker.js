@@ -6,8 +6,11 @@ const logo = require("asciiart-logo");
 const consTable = require("console.table");
 const { exit } = require("process");
 
+// call logo function right away
+displayLogo();
+
 // function to display "employee tracker logo"
-function logo(){
+function displayLogo(){
     // setting the text to display
     const logoText = logo({name : "Employee Tracker"}).render();
     // logging it so it's visible on the command line
@@ -32,13 +35,13 @@ function init () {
     .then((data) => {
         // using a switch to call the appropriate function depending on what the user selected
         switch (data.task){
-            case "Add a role":
+            case "Add role":
                 addRole();
                 break;
-            case "Add a department":
+            case "Add department":
                 addDepartment();
                 break;
-            case "Add an employee":
+            case "Add new employee":
                 addEmployee();
                 break;
             case "Update an employee's role":
@@ -55,7 +58,7 @@ function init () {
                 break;
             // if none of the above cases were selected, this will exit out of the established connection
             default:
-                connection.end();
+                db.connection.end();
         }
 
     })
@@ -71,10 +74,12 @@ async function addRole() {
     // adding role questions
     const role = await inquirer.prompt([
         {
+            type: "input",
             name: "title",
             message: "What is the name of the role?"
           },
           {
+            type: "input",
             name: "salary",
             message: "What is the salary of the role?"
           },
@@ -82,13 +87,30 @@ async function addRole() {
             type: "list",
             name: "department_id",
             message: "Which department does this role belong to?",
-            choices: departmentChoices
+            choices: deptChoices
           }
     ])
-    await db.createRole(role)
+    await db.addRole(role)
     // success response
     console.log(`Success! Added ${role.title} to the database`)
     // display initial questions again
     init()
 
+}
+
+// function to add department 
+async function addDepartment(){
+    // prompt for adding dept
+    const department = await inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is the name of the department?"
+          }
+    ])
+    // adding dept to database
+    await db.addDepartment(department)
+    console.log(`Success! Added ${department.name} to the database`);
+    // display initial questions again
+    init()
 }
