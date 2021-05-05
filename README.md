@@ -8,7 +8,7 @@
 
 ## Description
 This is a tool that can be used to track employees in a database, along with their corresponding department and role. You can add a role, add a department, add a new employee, update an employee's role, view all employees, view all departments, and view all roles. 
-![Logo](./demo/employeetrackerlogo.png)
+![Logo](./demo/employeetrackerLogo.png)
 ![Add Employee](./demo/addEmployee.png)
 ![View all employees](./demo/allEmployees.png)
 
