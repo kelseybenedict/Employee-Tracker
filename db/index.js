@@ -36,9 +36,14 @@ class DB {
     };
     // add new employee to db
     addEmployee(newEmployee){
+        // add employee received from user into employee table
         return this.connection.query("INSERT INTO employee SET ?", newEmployee)
     }
-
+    // update role of selected employee
+    updateRole(id, role_id){
+        // update the employee's role by the id received from user
+        return this.connection.query("UPDATE employee SET role_id = ? WHERE id = ?", [role_id, id])
+    }
 };
 
 module.exports = new DB(connection);

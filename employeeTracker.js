@@ -167,7 +167,61 @@ async function addEmployee() {
 
 // function to update employee's role
 async function updateRole() {
-
+    // finding all employees & roles so we can choose from them
     const allEmployees = await db.findAllEmployees();
+    const allRoles = await db.findAllRoles();
+    // mapping a list of employees to reference in our question
+    const employeeList = allEmployees.map(({id, first_name, last_name}) => ({
+        name: `${first_name} ${last_name}`,
+        value: id
+    }))
+    const roleOptions = allRoles.map(({ id, title }) => ({
+        name: title,
+        value: id
+    }));
+    // questions to ask user
+    const updateEmployee = await inquirer.prompt([
+        {
+            type: "list",
+            name: "id",
+            message: "Which employee's role would you like to update?",
+            choices: employeeList
+        },
+        {
+            type: "list",
+            name: "role_id",
+            message: "Which role do you want to set for this employee?",
+            choices: roleOptions
+        }
+    ])
+    await db.updateRole(updateEmployee.id, updateEmployee.role_id)
+    console.log(`Success! Updated employee role to the database`)
 
+    // display initial questions again
+    init()
+}
+
+// function to view all employees
+async function viewEmployees(){
+    // getting employees from db
+    const allEmployees = await db.findAllEmployees();
+    // logging them to console
+    console.table(allEmployees);
+    init()
+
+}
+
+async function viewDepartments(){
+    // getting depts from database
+    const departments = await db.findAllDepartments();
+    // logging departments to console
+    console.table(departments)
+    init()
+}
+async function viewRoles(){
+    // getting roles from db
+    const allRoles = await db.findAllRoles();
+    // logging roles to console
+    console.table(allRoles)
+    init()
 }
